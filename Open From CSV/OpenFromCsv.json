@@ -1,0 +1,151 @@
+{
+  "Name": "OpenFromCSV",
+  "CreationDate": "2019-3-4",
+  "Commands": [
+    {
+      "Command": "comment",
+      "Target": "Description: Reads websites from CSV, saves last read website to another CSV file.",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "CSV Variables:",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "openfromcsv-loop.csv",
+      "Value": "loop_csv"
+    },
+    {
+      "Command": "store",
+      "Target": "openfromcsv-websites.csv",
+      "Value": "read_from_this_csv"
+    },
+    {
+      "Command": "comment",
+      "Target": "Last visited item line:",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${loop_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${!csvReadMaxRow}",
+      "Value": "!csvReadLineNumber"
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${loop_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${!COL1}",
+      "Value": "startpage"
+    },
+    {
+      "Command": "comment",
+      "Target": "Total of lines in CSV",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${startpage} out of ${!csvReadMaxRow}",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "Code starts here",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "true ",
+      "Value": "!errorignore"
+    },
+    {
+      "Command": "while",
+      "Target": "(${startpage} <= ${!csvReadMaxRow})",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Starting page ${startpage}...",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${startpage}",
+      "Value": "!csvReadLineNumber"
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "START code logic",
+      "Value": ""
+    },
+    {
+      "Command": "open",
+      "Target": "${!COL1}",
+      "Value": ""
+    },
+    {
+      "Command": "waitForPageToLoad",
+      "Target": "6000",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "END code logic",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Line ${startpage} (${!COL1}) finished.",
+      "Value": ""
+    },
+    {
+      "Command": "storeEval",
+      "Target": "${startpage}+1",
+      "Value": "startpage"
+    },
+    {
+      "Command": "store",
+      "Target": "${startpage}",
+      "Value": "!csvLine"
+    },
+    {
+      "Command": "csvSave",
+      "Target": "${loop_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "endWhile",
+      "Target": "",
+      "Value": ""
+    }
+  ]
+}

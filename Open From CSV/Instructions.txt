@@ -1,0 +1,12 @@
+What does it do?
+Reads multiple URLs from openfromcsv-websites.csv. 
+
+Read lines are stored at openfromcsv-loop.csv, so if you stop the script at any time it will restart from the last read line.
+
+In this example it is simply opening each URL but you can add any logic you'd like.
+
+How do I use it?
+1. Add the .JSON script and .CSV files.
+2. Run the script by clicking on the "Play Macro" button. 
+
+You can develop your desired code logic between the comments 'START code logic' and 'END code logic'.
