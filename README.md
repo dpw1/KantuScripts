@@ -7,8 +7,8 @@ Useful collection of documented scripts to use with the
   <li>
     <a href="https://github.com/dpw1/KantuScripts/tree/master/Open%20From%20CSV"
       >Open From Csv</a
-    >: Reads multiple URLs from a CSV file. When stopped, it will restart from
-    the last read line.
+    >: Boilerplate to read multiple URLs from a CSV file. When stopped, it will
+    restart from the last read line. Customize as needed.
   </li>
   <li>
     <a href="https://github.com/dpw1/KantuScripts/tree/master/Email%20Scraper"
