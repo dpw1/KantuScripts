@@ -1,0 +1,30 @@
+Email Scraper: 
+
+Looks for e-mails in the HTML of a given website. 
+
+If it doesn't find anything, it look for a <a> tag with "contact" in its HREF, clicks on it and looks for an e-mail on this new page. 
+
+Features:
+- Easily customizable, provided with well documented Store variables, Echo and Comments;
+- Persistent: if you stop the script it will restart on the last read line;
+- Ignores all strings that are not actual e-mails (ie: file@something.jpg will be discarded).
+
+How to use it:
+
+The following 4 dummy websites are provided:
+
+Has Contact Button: https://caylor-custom-flies.myshopify.com
+Has No Email: https://sitecore-market.myshopify.com
+Has Email: https://gemchocolates.myshopify.com
+Has Email: https://mydialnstyle.com/
+
+Usage is simple:
+
+1. Copy the 3 .CSV files to the datasource folder.
+2. Create a new macro file and paste the code found in Email_Scraper.json
+3. Save it and Hit "Play Macro".
+
+Notes:
+
+- You can change the css_selector variable to something matching your need. For instance, if you want to search for a websites in different languages, "contact" may not be the most effective choice.
+- Don't forget to restart the emailscraper-loop.csv variable when you start a new set of websites. To restart it, simply delete everything and add the number 1 to the first line.

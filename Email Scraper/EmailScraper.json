@@ -1,0 +1,241 @@
+{
+  "Name": "Email_Scraper",
+  "CreationDate": "2019-3-5",
+  "Commands": [
+    {
+      "Command": "comment",
+      "Target": "Description: Reads websites from CSV, saves found e-mails into another CSV file.",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "Customizable Variables:",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "emailscraper-loop.csv",
+      "Value": "loop_csv"
+    },
+    {
+      "Command": "store",
+      "Target": "emailscraper-websites.csv",
+      "Value": "read_from_this_csv"
+    },
+    {
+      "Command": "store",
+      "Target": "emailscraper-saved-emails.csv",
+      "Value": "save_into_this_csv"
+    },
+    {
+      "Command": "store",
+      "Target": "css=a[href*='contact']",
+      "Value": "css_selector"
+    },
+    {
+      "Command": "comment",
+      "Target": "[grabs last visited line]",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${loop_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${!csvReadMaxRow}",
+      "Value": "!csvReadLineNumber"
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${loop_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${!COL1}",
+      "Value": "startpage"
+    },
+    {
+      "Command": "comment",
+      "Target": "[Grabs total of lines in CSV]",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${startpage} out of ${!csvReadMaxRow}",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "[Loop starts here]",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "true ",
+      "Value": "!errorignore"
+    },
+    {
+      "Command": "while",
+      "Target": "(${startpage} <= ${!csvReadMaxRow})",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Starting page ${startpage}...",
+      "Value": ""
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${startpage}",
+      "Value": "!csvReadLineNumber"
+    },
+    {
+      "Command": "csvRead",
+      "Target": "${read_from_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "START code logic",
+      "Value": ""
+    },
+    {
+      "Command": "open",
+      "Target": "${!COL1}",
+      "Value": ""
+    },
+    {
+      "Command": "waitForPageToLoad",
+      "Target": "6000",
+      "Value": ""
+    },
+    {
+      "Command": "storeEval",
+      "Target": "var find_emails = (text = document.body.innerHTML) => {     var emails = [];     var emailsTemp = text.match(/(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))/gi);        \tif (!emailsTemp || emailsTemp == null) { return false; }   \t   \temailsTemp.map(e => {         e.match(/(.jpg|.jpeg|.png|.gif|.mov|.mp4|.mp3|.avi|.wmv)$/gmi) ? null : emails.push(e);     });        return emails.length > 0 ? [...new Set(emails)] : false; }; var all_emails = find_emails();",
+      "Value": "all_emails"
+    },
+    {
+      "Command": "storeEval",
+      "Target": "all_emails",
+      "Value": "all_emails"
+    },
+    {
+      "Command": "if",
+      "Target": "(${all_emails} == false || !${!LastCommandOK})",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Did not find any e-mails, looking for contact page.",
+      "Value": ""
+    },
+    {
+      "Command": "clickAndWait",
+      "Target": "${css_selector}",
+      "Value": ""
+    },
+    {
+      "Command": "storeEval",
+      "Target": "var find_emails = (text = document.body.innerHTML) => {     var emails = [];     var emailsTemp = text.match(/(([^<>()\\[\\]\\\\.,;:\\s@\"]+(\\.[^<>()\\[\\]\\\\.,;:\\s@\"]+)*)|(\".+\"))@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))/gi);        \tif (!emailsTemp || emailsTemp == null) { return false; }   \t   \temailsTemp.map(e => {         e.match(/(.jpg|.jpeg|.png|.gif|.mov|.mp4|.mp3|.avi|.wmv)$/gmi) ? null : emails.push(e);     });        return emails.length > 0 ? [...new Set(emails)] : false; }; var all_emails = find_emails();",
+      "Value": "all_emails"
+    },
+    {
+      "Command": "storeEval",
+      "Target": "all_emails",
+      "Value": "all_emails"
+    },
+    {
+      "Command": "endif",
+      "Target": "",
+      "Value": ""
+    },
+    {
+      "Command": "if",
+      "Target": "(${all_emails} == false || !${!LastCommandOK})",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "No e-mail found.",
+      "Value": ""
+    },
+    {
+      "Command": "else",
+      "Target": "",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "${all_emails}",
+      "Value": ""
+    },
+    {
+      "Command": "store",
+      "Target": "${all_emails}",
+      "Value": "!csvLine"
+    },
+    {
+      "Command": "csvSave",
+      "Target": "${save_into_this_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "endif",
+      "Target": "",
+      "Value": ""
+    },
+    {
+      "Command": "comment",
+      "Target": "END code logic",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Line ${startpage} (${!COL1}) finished.",
+      "Value": ""
+    },
+    {
+      "Command": "storeEval",
+      "Target": "${startpage}+1",
+      "Value": "startpage"
+    },
+    {
+      "Command": "store",
+      "Target": "${startpage}",
+      "Value": "!csvLine"
+    },
+    {
+      "Command": "csvSave",
+      "Target": "${loop_csv}",
+      "Value": ""
+    },
+    {
+      "Command": "endWhile",
+      "Target": "",
+      "Value": ""
+    },
+    {
+      "Command": "echo",
+      "Target": "Completed!",
+      "Value": ""
+    }
+  ]
+}
